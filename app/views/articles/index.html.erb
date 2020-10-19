@@ -1,7 +1,9 @@
-<div class="title">Hello, World!</div>
-
 <div class="title">
     <% Article.all.each do |article| %>
       <%= article.tweet %>
     <% end %>
 </div>
+
+<%= link_to new_article_path do %>
+    <%= "post your tweet"%>
+<% end %>
