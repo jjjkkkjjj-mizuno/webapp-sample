@@ -27,7 +27,7 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-	"addPort": ["3000:3000"]
+	"addPort": ["3000:3000", "4306:3306"]
 
 	// Uncomment the next line if you want start specific services in your Docker Compose config.
 	// "runServices": [],

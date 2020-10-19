@@ -1,2 +1,7 @@
 <div class="title">Hello, World!</div>
-<div class="title"><%= @article%></div>
+
+<div class="title">
+    <% Article.all.each do |article| %>
+      <%= article.tweet %>
+    <% end %>
+</div>
