@@ -1,10 +1,16 @@
 <div class="title">
-    <% Article.all.each do |article| %>
-      <%= article.tweet %>
-      <br>
-    <% end %>
+  <% Article.all.each do |article| %>
+    <%= article.tweet %>
+    <br>
+  <% end %>
 </div>
 
 <%= link_to new_article_path do %>
-    <%= "post your tweet"%>
+  <%= "post your tweet"%>
+<% end %>
+
+<br>
+
+<%= link_to new_user_registration_path do %>
+  <%= "Register" %>
 <% end %>
