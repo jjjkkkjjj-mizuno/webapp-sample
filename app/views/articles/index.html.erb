@@ -1,16 +1,35 @@
+<% if user_signed_in? %>
+  <%= "login as #{current_user.account_name}" %>
+  <br>
+
+  <%= link_to new_article_path do %>
+    <%= "post your tweet"%>
+  <% end %>
+  <br>
+
+  <%= link_to destroy_user_session_path, method: "delete" do %>
+    <%= "Logout" %>
+  <% end %>
+
+<% else %>
+  <%= "Not login" %>
+  <br>
+
+  <%= link_to new_user_session_path do %>
+    <%= "Login" %>
+  <% end %>
+  <br>
+
+  <%= link_to new_user_registration_path do %>
+    <%= "Register" %>
+  <% end %>
+<% end %>
+
+<br>
+
 <div class="title">
   <% Article.all.each do |article| %>
     <%= article.tweet %>
     <br>
   <% end %>
 </div>
-
-<%= link_to new_article_path do %>
-  <%= "post your tweet"%>
-<% end %>
-
-<br>
-
-<%= link_to new_user_registration_path do %>
-  <%= "Register" %>
-<% end %>
