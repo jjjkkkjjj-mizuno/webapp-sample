@@ -1,6 +1,32 @@
 <%= "#{@user.account_name}\'s page" %>
 <br>
 
+<% if @user.id != current_user.id %>
+    <div id="follow" action="<%= follow_user_path(@user.id) %>">
+        <% if Follow.find_by(followed_by_id: current_user.id) == nil %>
+            Follow
+        <% else %>
+            Following
+        <% end %>
+    </div>
+<% end %>
+
+<%# show following list %>
+<%= "Followed number:#{Follow.where(followed_by_id: @user.id).count}" %>
+<% Follow.where(followed_by_id: @user.id).each do |follow| %>
+    <%= link_to User.find(follow.following_id).account_name, user_path(follow.following_id) %>
+<% end %>
+<br>
+
+<%# show follower list %>
+<span id="follower">
+    <%= "Follower number:#{Follow.where(following_id: @user.id).count}" %>
+    <% Follow.where(following_id: @user.id).each do |follow| %>
+        <%= link_to User.find(follow.followed_by_id).account_name, user_path(follow.followed_by_id) %>
+    <% end %>
+</span>
+<br>
+
 <% Article.where(user_id: @user.id).each do |article| %>
     <div class="title">
       <%# show user %>

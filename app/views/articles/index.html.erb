@@ -27,8 +27,9 @@
   <% end %>
 <% end %>
 
-<br>
+<br><br>
 
+All tweets
 <%# show tweet %>
 <% Article.all.each do |article| %>
   <% if user_signed_in? %>
@@ -57,3 +58,21 @@
   <% end %>
 <% end %>
 
+<br>
+<% if user_signed_in? %>
+  Timeline
+  <% Article.all.each do |article| %>
+    <% if Follow.find_by(following_id: article.user.id, followed_by_id: current_user.id) != nil || article.user.id == current_user.id %>
+      <div class="title">
+        <%# show user %>
+        <%= link_to "#{article.user.account_name}", user_path(article.user.id)%>
+        <%= "(#{article.created_at.in_time_zone('Tokyo').strftime("%Y/%m/%d %H:%M:%S")})：" %>
+        <%# show tweet %>
+        <%= article.tweet %>
+        <%# show like %>
+        <span action="<%= create_like_article_path(article) %>" class="like <% if article.likes.find_by(user_id: current_user.id) != nil %>active<% end %>" id="article<%= article.id%>" style="color:blue">Like!<%= article.likes.count %></span>
+        <br>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

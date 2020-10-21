@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_20_033642) do
+ActiveRecord::Schema.define(version: 2020_10_21_003427) do
 
   create_table "articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "tweet", null: false
@@ -18,6 +18,15 @@ ActiveRecord::Schema.define(version: 2020_10_20_033642) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_articles_on_user_id"
+  end
+
+  create_table "follows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "following_id"
+    t.bigint "followed_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followed_by_id"], name: "index_follows_on_followed_by_id"
+    t.index ["following_id"], name: "index_follows_on_following_id"
   end
 
   create_table "likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -44,6 +53,8 @@ ActiveRecord::Schema.define(version: 2020_10_20_033642) do
   end
 
   add_foreign_key "articles", "users"
+  add_foreign_key "follows", "users", column: "followed_by_id"
+  add_foreign_key "follows", "users", column: "following_id"
   add_foreign_key "likes", "articles"
   add_foreign_key "likes", "users"
 end

@@ -14,5 +14,29 @@ document.addEventListener("turbolinks:load", function(){
                 }
             })
         })
+        $("#follow").on("click", function(){
+            $.ajax({
+                url: $(this).attr("action"),
+                type: "get"
+            }).done(function(json){
+                if(json.follow == "follow"){
+                    $("#follow").text("Following");
+                    $("#follower").text(`Follower number:${json.follower}`);
+                    json.follower.forEach(function(follower){
+                        $("#follower").append(`
+                            <a href="${follower.link}">${follower.name}</a>
+                        `);
+                    })
+                }else{
+                    $("#follow").text("Follow");
+                    $("#follower").text(`Follower number:${json.follower}`);
+                    json.follower.forEach(function(follower){
+                        $("#follower").append(`
+                            <a href="${follower.link}">${follower.name}</a>
+                        `);
+                    })
+                }
+            })
+        })
     })
 })
