@@ -1,0 +1,17 @@
+<%= "#{@user.account_name}\'s page" %>
+<br>
+
+<% Article.where(user_id: @user.id).each do |article| %>
+    <div class="title">
+      <%# show user %>
+      <%= "#{article.user.account_name}(#{article.created_at.in_time_zone('Tokyo').strftime("%Y/%m/%d %H:%M:%S")})：" %>
+      <%# show tweet %>
+      <%= article.tweet %>
+      <%# show like %>
+      <span action="<%= create_like_article_path(article) %>" class="like <% if article.likes.find_by(user_id: current_user.id) != nil %>active<% end %>" id="article<%= article.id%>" style="color:blue">Like!<%= article.likes.count %></span>
+      <br>
+    </div>
+
+<% end %>
+
+<%= link_to "Back to top page", root_path %>
