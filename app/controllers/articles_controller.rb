@@ -28,10 +28,12 @@ class ArticlesController < ApplicationController
     if user_signed_in? && @article.user_id != current_user.id && @article.likes.find_by(user_id: current_user.id) == nil
       # if login user has not liked yet
       Like.create(user_id: current_user.id, article_id: @article.id)
+      Notification.create(notifying_id: @article.user_id, notified_by_id: current_user.id, article_id: @article.id)
       @like = "like"
     elsif user_signed_in? && @article.user_id != current_user.id && @article.likes.find_by(user_id: current_user.id) != nil
       # if login user has already liked
       Like.find_by(user_id: current_user.id, article_id: @article.id).destroy
+      Notification.find_by(notifying_id: @article.user_id, notified_by_id: current_user.id, article_id: @article.id).destroy
       @like = "unlike"
     end
   end

@@ -75,4 +75,14 @@ All tweets
       </div>
     <% end %>
   <% end %>
+  Notification
+  <% Notification.where(notifying_id: current_user.id).each do |notification| %>
+    <div class="title">
+      <% if notification.article_id != nil %>
+        <%= User.find(notification.notified_by_id).account_name %> liked your tweet: <%= Article.find(notification.article_id).tweet %>
+      <% else %>
+        <%= User.find(notification.notified_by_id).account_name %> followed you
+      <% end %>
+    </div>
+  <% end %>
 <% end %>
